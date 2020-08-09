@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>651</width>
+    <height>590</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,117 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QTreeView" name="treeView"/>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="filterPatternLabel">
+        <property name="text">
+         <string>Filter pattern:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="filterPatternEdit">
+        <property name="clearButtonEnabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="filterSyntaxLabel">
+        <property name="text">
+         <string>Filter syntax:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="filterSyntaxComboBox">
+        <item>
+         <property name="text">
+          <string>glob</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Regular Expression</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Starts with</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Ends with</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="filterColumnLabel">
+        <property name="text">
+         <string>Filter column:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="filterColumnComboBox">
+        <item>
+         <property name="text">
+          <string>Both</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Title</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Summary</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QCheckBox" name="caseSensitiveFilterCB">
+        <property name="text">
+         <string>Case sensitive filter</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="caseSensitiveSortingCB">
+        <property name="text">
+         <string>Case sensitive sorting</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QTreeView" name="treeView">
+      <property name="alternatingRowColors">
+       <bool>true</bool>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -25,7 +135,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>651</width>
      <height>21</height>
     </rect>
    </property>
