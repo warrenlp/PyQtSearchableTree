@@ -20,3 +20,13 @@ class MainWindow(Ui_MainWindow, QtCore.QObject):
         self.treeView.setModel(self._proxy_model)
 
         self.treeView.header().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
+
+        # Attach slot/signals
+        self.filterPatternEdit.editingFinished.connect(
+            lambda: self._proxy_model.update_filter_pattern(self.filterPatternEdit.text()))
+        self.filterSyntaxComboBox.currentTextChanged.connect(self._proxy_model.update_filter_syntax)
+        self.filterColumnComboBox.currentTextChanged.connect(self._proxy_model.update_filter_column)
+        self.caseSensitiveFilterCB.stateChanged.connect(
+            lambda state: self._proxy_model.update_case_sensitive_filter(state))
+        self.caseSensitiveSortingCB.stateChanged.connect(
+            lambda state: self._proxy_model.update_case_sensitive_sort(state))

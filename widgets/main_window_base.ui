@@ -42,7 +42,7 @@
        <widget class="QComboBox" name="filterSyntaxComboBox">
         <item>
          <property name="text">
-          <string>glob</string>
+          <string>Contains</string>
          </property>
         </item>
         <item>
@@ -104,6 +104,9 @@
         <property name="text">
          <string>Case sensitive sorting</string>
         </property>
+        <property name="tristate">
+         <bool>false</bool>
+        </property>
        </widget>
       </item>
       <item>
@@ -126,6 +129,12 @@
       <property name="alternatingRowColors">
        <bool>true</bool>
       </property>
+      <property name="sortingEnabled">
+       <bool>true</bool>
+      </property>
+      <attribute name="headerCascadingSectionResizes">
+       <bool>true</bool>
+      </attribute>
      </widget>
     </item>
    </layout>
