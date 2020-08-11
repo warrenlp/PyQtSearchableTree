@@ -24,35 +24,40 @@ class CustomSortFilterProxyModel(QtCore.QSortFilterProxyModel):
         title_str = self.sourceModel().data(title_index, role=QtCore.Qt.DisplayRole).value()
         summary_str = self.sourceModel().data(summary_index, role=QtCore.Qt.DisplayRole).value()
 
-        if self.debug:
-            print(f"Row: {source_row}")
-            print(f"Title: {title_str}")
-
         accept_child = False
         if self.sourceModel().hasChildren(title_index):
             num_children = self.sourceModel().rowCount(title_index)
             accept_child = any((self.filterAcceptsRow(child_row, title_index)) for child_row in range(num_children))
 
+        filter_str = self.filter_str
+
+        if not self.filter_case_sensitive:
+            if self.filter_str:
+                filter_str = filter_str.lower()
+            if title_str:
+                title_str = title_str.lower()
+            if summary_str:
+                summary_str = summary_str.lower()
+
         if self.filter_type == "Contains":
-            filter_fun = lambda x: self.filter_str in x
+            filter_fun = lambda x: filter_str in x
         elif self.filter_type == "Regular Expression":
-            filter_fun = lambda x: self.filter_str in x
+            filter_fun = lambda x: filter_str in x
         elif self.filter_type == "Starts with":
-            filter_fun = lambda x: x.startswith(self.filter_str)
+            filter_fun = lambda x: x.startswith(filter_str)
         elif self.filter_type == "Ends with":
-            filter_fun = lambda x: x.endswith(self.filter_str)
+            filter_fun = lambda x: x.endswith(filter_str)
         else:
             raise ValueError(f"Unknown Filter syntax: {self.filter_type}")
 
         if self.filter_col == "Title" or self.filter_col == "Both":
-            if title_str is None:
-                raise ValueError(f"title_str is None")
             has_title = filter_fun(title_str) if self.filter_str else True
 
         if self.filter_col == "Summary" or self.filter_col == "Both":
-            if summary_str is None:
-                raise ValueError(f"summary_str is None")
             has_summary = filter_fun(summary_str) if self.filter_str else True
+
+        if self.debug:
+            print(f"Title: {title_str}")
 
         return has_title or has_summary or accept_child
 
@@ -74,13 +79,12 @@ class CustomSortFilterProxyModel(QtCore.QSortFilterProxyModel):
 
     @QtCore.pyqtSlot(int)
     def update_case_sensitive_filter(self, state):
-        self.filter_case_sensitive = state
-        print(f"Case sensitive filter: {state}")
+        self.filter_case_sensitive = state == 2
         self.invalidateFilter()
 
     @QtCore.pyqtSlot(int)
     def update_case_sensitive_sort(self, state):
-        self.debug = True if state == 2 else False
+        self.debug = state == 2
         self.sorting_case_sensitive = state
         print(f"Case sensitive sort: {state}")
         # self.invalidateFilter()
