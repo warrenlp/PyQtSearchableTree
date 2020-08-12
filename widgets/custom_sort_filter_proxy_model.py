@@ -1,4 +1,6 @@
 
+import re
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -42,7 +44,12 @@ class CustomSortFilterProxyModel(QtCore.QSortFilterProxyModel):
         if self.filter_type == "Contains":
             filter_fun = lambda x: filter_str in x
         elif self.filter_type == "Regular Expression":
-            filter_fun = lambda x: filter_str in x
+            flags = 0 if self.filter_case_sensitive else re.IGNORECASE
+            try:
+                pattern = re.compile(filter_str, flags=flags)
+                filter_fun = lambda x: bool(pattern.search(x))
+            except TypeError:  #  Invalid patterns will default to searching for everything.
+                filter_fun = pattern = re.compile(".*")
         elif self.filter_type == "Starts with":
             filter_fun = lambda x: x.startswith(filter_str)
         elif self.filter_type == "Ends with":
